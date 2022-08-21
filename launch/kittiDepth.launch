@@ -1,0 +1,14 @@
+<launch>
+
+    <arg name="data_folder" default="/home/bigby/ws/rosbag"/>
+    <arg name="bagfile" default="$(arg data_folder)/kitti_data_odometry_color_sequence_05.bag"/>
+    <arg name="start_time" default="0"/>
+    <!--nodes-->
+    <node pkg="depth_generator" type="depth_generator" name="depth_generator" required="true" output="screen">
+      <param name="left_image_topic" type="string" value="/kitti/camera_color_left/image_rect" />
+      <param name="right_image_topic" type="string" value="/kitti/camera_color_right/image_rect" />
+    </node>
+    <node pkg="rosbag" type="play" name="player" required="false" output="screen" args=" -q --clock -r 1 -s $(arg start_time) $(arg bagfile)" />
+   
+  
+</launch>
